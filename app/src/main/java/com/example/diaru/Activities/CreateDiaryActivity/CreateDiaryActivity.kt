@@ -19,7 +19,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.diaru.Activities.CreateDiaryActivity.ui.theme.DiaruTheme
-import com.example.diaru.Activities.MainActivity.MyApp
 import com.example.diaru.database.diary.DiaryViewModel
 
 class CreateDiaryActivity : ComponentActivity() {
