@@ -1,0 +1,2 @@
+# Diaru
+A diary app
