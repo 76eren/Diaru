@@ -2,7 +2,6 @@ package com.example.diaru.database.diary
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.example.diaru.Database.Diary.DiaryEntity
 
 @Dao
 interface DiaryDao {

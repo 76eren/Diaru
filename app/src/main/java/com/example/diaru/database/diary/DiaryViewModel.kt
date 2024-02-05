@@ -3,7 +3,6 @@ package com.example.diaru.database.diary
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import com.example.diaru.Database.Diary.DiaryEntity
 
 class DiaryViewModel(application: Application) : AndroidViewModel(application) {
     private val repository: DiaryRepository = DiaryRepository(application)

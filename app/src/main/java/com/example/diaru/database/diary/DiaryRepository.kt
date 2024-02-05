@@ -2,8 +2,6 @@ package com.example.diaru.database.diary
 
 import android.app.Application
 import androidx.lifecycle.LiveData
-import com.example.diaru.Database.Diary.DiaryDatabase
-import com.example.diaru.Database.Diary.DiaryEntity
 
 class DiaryRepository(application: Application) {
     private var diaryDao: DiaryDao
