@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.example.diaru.Activities.CreateDiaryActivity.ui.theme.DiaruTheme
 import com.example.diaru.database.diary.DiaryViewModel
@@ -20,10 +21,18 @@ class CreateDiaryActivity : ComponentActivity() {
             DiaruTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-                    FeelingBar(diaryCreateViewModel)
+                    CreateDiaryContent(diaryCreateViewModel)
                 }
             }
         }
+    }
+}
+
+@Composable
+fun CreateDiaryContent(diaryCreateViewModel: DiaryCreateViewModel) {
+    when (diaryCreateViewModel.contentScreen.value) {
+        UI_STATES.FEELING_SELECTION -> FeelingBar(diaryCreateViewModel)
+        UI_STATES.CONTENT_INPUT -> Content()
     }
 }
 
