@@ -1,5 +1,7 @@
 package com.example.diaru.Activities.MainActivity
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -20,6 +22,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.diaru.Activities.CreateDiaryActivity.CreateDiaryActivity
 import com.example.diaru.Navbar.BottomNavigationBar
 import com.example.diaru.Navbar.Screen
 import com.example.diaru.database.diary.DiaryViewModel
@@ -32,18 +35,17 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             DiaruTheme {
-                MyApp()
+                MyApp(this)
             }
         }
     }
 }
 
-@Preview
 @Composable
-fun MyApp() {
+fun MyApp(context: Context) {
     val navController = rememberNavController()
     Scaffold(
-        topBar = { Toolbar() },
+        topBar = { Toolbar(context) },
         bottomBar = { BottomNavigationBar(navController) }
     ) { innerPadding ->
         NavHost(navController, startDestination = Screen.Home.route, Modifier.padding(innerPadding)) {
@@ -55,11 +57,11 @@ fun MyApp() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Toolbar() {
+fun Toolbar(context: Context) {
     TopAppBar(
         title = { Text("Actions", color = Color.White) },
         actions = {
-            IconButton(onClick = { addBook() }) {
+            IconButton(onClick = { addBook(context) }) {
                 Icon(Icons.Filled.Add, contentDescription = "Add", tint = Color.White)
             }
         },
@@ -71,6 +73,7 @@ fun Toolbar() {
     )
 }
 
-fun addBook() {
-    // TODO: implement this
+fun addBook(contenxt: Context) {
+    val intent = Intent(contenxt, CreateDiaryActivity::class.java)
+    contenxt.startActivity(intent)
 }
