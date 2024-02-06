@@ -5,7 +5,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 
 class DiaryCreateViewModel : ViewModel() {
-    val feeling = mutableIntStateOf(-1)
+    var feeling = mutableIntStateOf(-1)
+    var title = mutableStateOf("")
+    var content = mutableStateOf("")
     var contentScreen = mutableStateOf(UI_STATES.FEELING_SELECTION) // Default to showing the feeling selection screen
 }
 

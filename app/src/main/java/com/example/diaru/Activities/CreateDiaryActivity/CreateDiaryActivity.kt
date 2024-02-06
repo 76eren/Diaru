@@ -10,6 +10,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.example.diaru.Activities.CreateDiaryActivity.ui.theme.DiaruTheme
 import com.example.diaru.database.diary.DiaryViewModel
+import androidx.compose.ui.graphics.Color
+import com.example.diaru.ui.theme.skyeBlue
 
 class CreateDiaryActivity : ComponentActivity() {
     private val diaryViewModel: DiaryViewModel by viewModels()
@@ -17,10 +19,10 @@ class CreateDiaryActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContent {
             DiaruTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
+                Surface(modifier = Modifier.fillMaxSize(), color = skyeBlue) {
                     CreateDiaryContent(diaryCreateViewModel)
                 }
             }
@@ -32,7 +34,7 @@ class CreateDiaryActivity : ComponentActivity() {
 fun CreateDiaryContent(diaryCreateViewModel: DiaryCreateViewModel) {
     when (diaryCreateViewModel.contentScreen.value) {
         UI_STATES.FEELING_SELECTION -> FeelingBar(diaryCreateViewModel)
-        UI_STATES.CONTENT_INPUT -> Content()
+        UI_STATES.CONTENT_INPUT -> Content(diaryCreateViewModel)
     }
 }
 

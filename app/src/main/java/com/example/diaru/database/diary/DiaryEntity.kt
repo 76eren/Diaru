@@ -10,5 +10,6 @@ data class DiaryEntity(
     var id: String = UUID.randomUUID().toString(),
     var content: String,
     var date: Long, // Store date as seconds since the Unix epoch
-    var feeling: Int
+    var feeling: Int,
+    var title: String
 )
