@@ -1,16 +1,16 @@
 package com.example.diaru.Activities.CreateDiaryActivity
 
+import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import androidx.compose.foundation.layout.*
-import androidx.compose.material3.*
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.example.diaru.Activities.CreateDiaryActivity.ui.theme.DiaruTheme
 import com.example.diaru.database.diary.DiaryViewModel
-import androidx.compose.ui.graphics.Color
 import com.example.diaru.ui.theme.skyeBlue
 
 class CreateDiaryActivity : ComponentActivity() {
@@ -23,7 +23,7 @@ class CreateDiaryActivity : ComponentActivity() {
         setContent {
             DiaruTheme {
                 Surface(modifier = Modifier.fillMaxSize(), color = skyeBlue) {
-                    CreateDiaryContent(diaryCreateViewModel)
+                    CreateDiaryContent(diaryCreateViewModel, this)
                 }
             }
         }
@@ -31,10 +31,10 @@ class CreateDiaryActivity : ComponentActivity() {
 }
 
 @Composable
-fun CreateDiaryContent(diaryCreateViewModel: DiaryCreateViewModel) {
+fun CreateDiaryContent(diaryCreateViewModel: DiaryCreateViewModel, context: Context) {
     when (diaryCreateViewModel.contentScreen.value) {
         UI_STATES.FEELING_SELECTION -> FeelingBar(diaryCreateViewModel)
-        UI_STATES.CONTENT_INPUT -> Content(diaryCreateViewModel)
+        UI_STATES.CONTENT_INPUT -> Content(diaryCreateViewModel, context = context)
     }
 }
 
