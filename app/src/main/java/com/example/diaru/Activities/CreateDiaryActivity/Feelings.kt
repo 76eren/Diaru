@@ -61,7 +61,7 @@ fun FeelingBar(createViewModel: DiaryCreateViewModel) {
             images.forEachIndexed { index, image ->
                 ClickableImage(imageRes = image) {
                     createViewModel.feeling.intValue = index
-                    createViewModel.contentScreen.value = UI_STATES.CONTENT_INPUT
+                    createViewModel.contentScreen.value = UI_STATES.TITLE_INPUT
                 }
             }
         }

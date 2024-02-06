@@ -1,6 +1,7 @@
 package com.example.diaru.Activities.CreateDiaryActivity
 
 import android.content.Context
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
@@ -76,7 +77,7 @@ fun InputField(diaryCreateViewModel: DiaryCreateViewModel, context: Context) {
         Button(
             onClick = {
               if (value.isNotEmpty()) {
-                  diaryCreateViewModel.contentScreen.value = UI_STATES.CONTENT_INPUT
+                  onTitleButtonClick(diaryCreateViewModel, context, value)
               }
               else {
                   Toast.makeText(context, "Please enter a title", Toast.LENGTH_SHORT).show()
@@ -110,5 +111,13 @@ fun InputField(diaryCreateViewModel: DiaryCreateViewModel, context: Context) {
     }
 }
 
-fun onTitleButtonClick() {
+fun onTitleButtonClick(diaryCreateViewModel: DiaryCreateViewModel, context: Context, value: String) {
+    if (value.isNotEmpty()) {
+        diaryCreateViewModel.title.value = value
+        diaryCreateViewModel.contentScreen.value = UI_STATES.CONTENT_WRITE
+    }
+    else {
+        Toast.makeText(context, "Please enter a title", Toast.LENGTH_SHORT).show()
+    }
+
 }

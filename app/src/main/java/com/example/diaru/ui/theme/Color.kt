@@ -12,3 +12,4 @@ val Pink40 = Color(0xFF7D5260)
 
 val skyeBlue = Color(android.graphics.Color.parseColor("#a8dadc"))
 val darkSkyBlue = Color(android.graphics.Color.parseColor("#48b6b8"))
+val notepadYellow = Color(android.graphics.Color.parseColor("#FDF5C4"))

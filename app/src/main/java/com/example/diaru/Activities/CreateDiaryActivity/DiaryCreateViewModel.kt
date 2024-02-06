@@ -13,5 +13,6 @@ class DiaryCreateViewModel : ViewModel() {
 
 enum class UI_STATES {
     FEELING_SELECTION,
-    CONTENT_INPUT
+    TITLE_INPUT,
+    CONTENT_WRITE
 }
