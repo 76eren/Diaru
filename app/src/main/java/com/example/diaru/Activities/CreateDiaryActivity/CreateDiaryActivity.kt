@@ -30,10 +30,8 @@ class CreateDiaryActivity : ComponentActivity() {
                 val color: Color
                 if (settings.getSettingBoolean("preference_theme", false, this)) {
                     color =  MaterialTheme.colorScheme.background
-                    Log.d("lol", "A")
                 }
                 else {
-                    Log.d("lol", "B")
                     color = skyeBlue
                 }
 
