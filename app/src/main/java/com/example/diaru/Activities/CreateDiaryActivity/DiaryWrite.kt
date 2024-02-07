@@ -26,17 +26,20 @@ fun DiaryWriteEntry(diaryCreateViewModel: DiaryCreateViewModel, context: Context
     val settings = SettingsHandler()
 
     val customFontFamily: FontFamily
+    val fontSize: Int
     if (settings.getSettingBoolean("preference_cursive", false, context)) {
         customFontFamily = FontFamily(Font(R.font.beaty_diary))
+        fontSize = 26
     }
     else {
         customFontFamily = FontFamily.Default
+        fontSize = 18
     }
 
     BasicTextField(
         value = textState,
         onValueChange = { textState = it },
-        textStyle = TextStyle(fontSize = 26.sp, color = Color.Black, fontFamily = customFontFamily),
+        textStyle = TextStyle(fontSize = fontSize.sp, color = Color.Black, fontFamily = customFontFamily),
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp)
