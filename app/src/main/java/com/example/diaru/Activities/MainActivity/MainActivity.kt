@@ -55,7 +55,7 @@ fun MyApp(context: Context) {
     ) { innerPadding ->
         NavHost(navController, startDestination = Screen.Home.route, Modifier.padding(innerPadding)) {
             composable(Screen.Home.route) { }
-            composable(Screen.Settings.route) { }
+            composable(Screen.Settings.route) { PreferenceScreen(context) }
         }
     }
 }

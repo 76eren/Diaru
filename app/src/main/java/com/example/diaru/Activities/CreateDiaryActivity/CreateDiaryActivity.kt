@@ -35,7 +35,7 @@ fun CreateDiaryContent(diaryCreateViewModel: DiaryCreateViewModel, context: Cont
     when (diaryCreateViewModel.contentScreen.value) {
         UI_STATES.FEELING_SELECTION -> FeelingBar(diaryCreateViewModel)
         UI_STATES.TITLE_INPUT -> Content(diaryCreateViewModel, context = context)
-        UI_STATES.CONTENT_WRITE -> DiaryWriteEntry(diaryCreateViewModel)
+        UI_STATES.CONTENT_WRITE -> DiaryWriteEntry(diaryCreateViewModel, context)
     }
 }
 
