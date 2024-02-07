@@ -9,8 +9,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.example.diaru.Activities.CreateDiaryActivity.ui.theme.DiaruTheme
 import com.example.diaru.database.diary.DiaryViewModel
+import com.example.diaru.ui.theme.DiaruTheme
 import com.example.diaru.ui.theme.skyeBlue
 
 class CreateDiaryActivity : ComponentActivity() {
