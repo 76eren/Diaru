@@ -12,13 +12,14 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import com.example.diaru.Settings.SettingsHandler
 
 
 @Composable
 fun SwitchItem(settingName: String, settingsKey: String, default: Boolean ,context: Context) {
-    val sharedpreferences = PreferenceManager.getDefaultSharedPreferences(context)
-    val editor = sharedpreferences.edit()
-    val switchState = remember { mutableStateOf(sharedpreferences.getBoolean(settingsKey, default)) }
+    val settings = SettingsHandler()
+
+    val switchState = remember { mutableStateOf(settings.getSettingBoolean(settingsKey, default, context)) }
 
     Row(
         modifier = Modifier.fillMaxWidth(),
@@ -33,8 +34,7 @@ fun SwitchItem(settingName: String, settingsKey: String, default: Boolean ,conte
             checked = switchState.value,
             onCheckedChange = {
                 switchState.value = it
-                editor.putBoolean(settingsKey, it)
-                editor.apply()
+                settings.setSettingBoolean(settingsKey, it, context)
             },
         )
     }

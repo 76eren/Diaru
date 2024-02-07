@@ -16,16 +16,17 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.diaru.R
+import com.example.diaru.Settings.SettingsHandler
 import com.example.diaru.ui.theme.notepadYellow
 
 
 @Composable
 fun DiaryWriteEntry(diaryCreateViewModel: DiaryCreateViewModel, context: Context) {
     var textState by remember { mutableStateOf(TextFieldValue("")) }
-    val sharedpreferences = PreferenceManager.getDefaultSharedPreferences(context)
+    val settings = SettingsHandler()
 
     val customFontFamily: FontFamily
-    if (sharedpreferences.getBoolean("preference_cursive", false)) {
+    if (settings.getSettingBoolean("preference_cursive", false, context)) {
         customFontFamily = FontFamily(Font(R.font.beaty_diary))
     }
     else {
