@@ -2,6 +2,7 @@ package com.example.diaru.Activities.MainActivity
 
 import android.content.Context
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -17,17 +18,15 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.diaru.Activities.CreateDiaryActivity.CreateDiaryActivity
 import com.example.diaru.Navbar.BottomNavigationBar
 import com.example.diaru.Navbar.Screen
+import com.example.diaru.Settings.SettingsHandler
 import com.example.diaru.database.diary.DiaryViewModel
-import com.example.diaru.ui.theme.DiaruTheme
-import com.example.diaru.ui.theme.darkSkyBlue
-import com.example.diaru.ui.theme.skyeBlue
+import com.example.diaru.ui.theme.*
 
 class MainActivity : ComponentActivity() {
     private val diaryViewModel: DiaryViewModel by viewModels()
@@ -36,7 +35,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             DiaruTheme {
-                Surface(modifier = Modifier.fillMaxSize(), color = skyeBlue) {
+                Surface(modifier = Modifier.fillMaxSize()) {
                     MyApp(this)
                 }
 
@@ -48,10 +47,20 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun MyApp(context: Context) {
     val navController = rememberNavController()
+
+    val settings = SettingsHandler()
+    val color: Color
+    if (settings.getSettingBoolean("preference_theme", false, context)) {
+        color =  MaterialTheme.colorScheme.background
+    }
+    else {
+        color = skyeBlue
+    }
+
     Scaffold(
         topBar = { Toolbar(context) },
         bottomBar = { BottomNavigationBar(navController) },
-        backgroundColor = skyeBlue
+        backgroundColor = color
     ) { innerPadding ->
         NavHost(navController, startDestination = Screen.Home.route, Modifier.padding(innerPadding)) {
             composable(Screen.Home.route) { }
@@ -63,6 +72,23 @@ fun MyApp(context: Context) {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Toolbar(context: Context) {
+
+    val settings = SettingsHandler()
+
+    // I am not sure if handling the theme in a custom way is the best way to do it
+    val color: Color
+    if (settings.getSettingBoolean("preference_theme", false, context)) {
+        val nightModeFlags: Int = context.getResources().getConfiguration().uiMode and Configuration.UI_MODE_NIGHT_MASK
+        when (nightModeFlags) {
+            Configuration.UI_MODE_NIGHT_YES -> { color = topBarDarkMode }
+            Configuration.UI_MODE_NIGHT_NO -> { color = topBarLightMode }
+            else -> { color = MaterialTheme.colorScheme.background }
+        }
+    }
+    else {
+        color = darkSkyBlue
+    }
+
     TopAppBar(
         title = { Text("", color = Color.Blue) },
         actions = {
@@ -71,7 +97,7 @@ fun Toolbar(context: Context) {
             }
         },
         colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = darkSkyBlue,
+            containerColor = color,
             titleContentColor = Color.White,
             actionIconContentColor = Color.White
         )
