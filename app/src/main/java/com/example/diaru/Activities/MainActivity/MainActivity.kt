@@ -23,6 +23,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -136,17 +137,29 @@ fun ShowDiaryEntries(diaryViewModel: DiaryViewModel) {
 
 @Composable
 fun DiaryEntryItem(entry: DiaryEntity) {
+    val context = LocalContext.current
     val dateInt = entry.date
     val date: Date = Date()
     val formatter = SimpleDateFormat("MM-dd-yyyy : HH:mm")
     val formattedDate: String = formatter.format(date)
+    val settings: SettingsHandler = SettingsHandler()
+
+    val cardColor: Color
+    cardColor = if (settings.getSettingBoolean("preference_theme", false, context)) {
+        MaterialTheme.colorScheme.background
+    }
+    else {
+        cardColorLightMode
+    }
 
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(8.dp),
 
-        // TODO: Fix the background colour
+        colors = CardDefaults.cardColors(
+            containerColor = cardColor
+        ),
 
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     )
