@@ -61,7 +61,7 @@ fun DiaryViewApp() {
         },
             actions = {
                 IconButton(onClick = {  }) {
-                    Icon(Icons.Filled.Edit, contentDescription = "Edit")
+                    Icon(Icons.Filled.Edit, contentDescription = "Edit", tint = Color.White)
                 }
             },
             colors = TopAppBarDefaults.topAppBarColors(
