@@ -32,14 +32,7 @@ class CreateDiaryActivity : ComponentActivity() {
 
         setContent {
             DiaruTheme {
-                val settings = SettingsHandler()
-                val color: Color
-                if (settings.getSettingBoolean("preference_theme", false, this)) {
-                    color =  MaterialTheme.colorScheme.background
-                }
-                else {
-                    color = skyeBlue
-                }
+                val color = SettingsHandler().getColor(this)
 
                 Surface(modifier = Modifier.fillMaxSize(), color = color) {
                     CreateDiaryContent(diaryCreateViewModel, this, diaryViewModel)

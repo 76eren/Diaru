@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Diaru</string>
     <string name="title_activity_create_diary">CreateDiaryActivity</string>
+    <string name="title_activity_diary_view">DiaryView</string>
 </resources>

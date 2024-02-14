@@ -7,10 +7,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Scaffold
@@ -18,28 +16,19 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.diaru.Activities.CreateDiaryActivity.CreateDiaryActivity
 import com.example.diaru.Navbar.BottomNavigationBar
 import com.example.diaru.Navbar.Screen
-import com.example.diaru.R
 import com.example.diaru.Settings.SettingsHandler
 import com.example.diaru.database.diary.DiaryEntity
 import com.example.diaru.database.diary.DiaryViewModel
 import com.example.diaru.ui.theme.*
-import java.text.SimpleDateFormat
-import java.util.*
 
 
 class MainActivity : ComponentActivity() {
@@ -62,14 +51,7 @@ class MainActivity : ComponentActivity() {
 fun MyApp(context: Context, diaryViewModel: DiaryViewModel) {
     val navController = rememberNavController()
 
-    val settings = SettingsHandler()
-    val color: Color
-    if (settings.getSettingBoolean("preference_theme", false, context)) {
-        color =  MaterialTheme.colorScheme.background
-    }
-    else {
-        color = skyeBlue
-    }
+    val color = SettingsHandler().getColor(context)
 
     Scaffold(
         topBar = { Toolbar(context) },
@@ -87,22 +69,11 @@ fun MyApp(context: Context, diaryViewModel: DiaryViewModel) {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Toolbar(context: Context) {
-
     val settings = SettingsHandler()
 
     // I am not sure if handling the theme in a custom way is the best way to do it
-    val color: Color
-    if (settings.getSettingBoolean("preference_theme", false, context)) {
-        val nightModeFlags: Int = context.getResources().getConfiguration().uiMode and Configuration.UI_MODE_NIGHT_MASK
-        when (nightModeFlags) {
-            Configuration.UI_MODE_NIGHT_YES -> { color = topBarDarkMode }
-            Configuration.UI_MODE_NIGHT_NO -> { color = topBarLightMode }
-            else -> { color = MaterialTheme.colorScheme.background }
-        }
-    }
-    else {
-        color = darkSkyBlue
-    }
+    val color: Color = toolbarColorPicker(context)
+
 
     TopAppBar(
         title = { Text("", color = Color.Blue) },
@@ -125,88 +96,20 @@ fun addBook(contenxt: Context) {
 }
 
 @Composable
-fun ShowDiaryEntries(diaryViewModel: DiaryViewModel) {
-    val diaryEntries by diaryViewModel.allEntries.observeAsState(initial = emptyList())
-
-    LazyColumn {
-        items(diaryEntries) { entry ->
-            DiaryEntryItem(entry)
+fun toolbarColorPicker(context: Context): Color {
+    val settings = SettingsHandler()
+    val color: Color
+    if (settings.getSettingBoolean("preference_theme", false, context)) {
+        val nightModeFlags: Int = context.getResources().getConfiguration().uiMode and Configuration.UI_MODE_NIGHT_MASK
+        when (nightModeFlags) {
+            Configuration.UI_MODE_NIGHT_YES -> { color = topBarDarkMode }
+            Configuration.UI_MODE_NIGHT_NO -> { color = topBarLightMode }
+            else -> { color = MaterialTheme.colorScheme.background }
         }
-    }
-}
-
-@Composable
-fun DiaryEntryItem(entry: DiaryEntity) {
-    val context = LocalContext.current
-    val dateInt = entry.date
-    val date: Date = Date()
-    val formatter = SimpleDateFormat("MM-dd-yyyy : HH:mm")
-    val formattedDate: String = formatter.format(date)
-    val settings: SettingsHandler = SettingsHandler()
-
-    val cardColor: Color
-    cardColor = if (settings.getSettingBoolean("preference_theme", false, context)) {
-        MaterialTheme.colorScheme.background
     }
     else {
-        cardColorLightMode
+        color = darkSkyBlue
     }
 
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(8.dp),
-
-        colors = CardDefaults.cardColors(
-            containerColor = cardColor
-        ),
-
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
-    )
-    {
-        Row (
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
-            verticalAlignment = Alignment.CenterVertically
-        )
-        {
-            Image(
-                painter = painterResource(id = getFeelingImageResource(entry.feeling)),
-                contentDescription = "Feeling image",
-                modifier = Modifier.size(50.dp)
-            )
-            Spacer(modifier = Modifier.width(16.dp))
-            Column(
-                modifier = Modifier.weight(1f),
-                verticalArrangement = Arrangement.Center
-            ) {
-                Text(
-                    text = entry.title,
-                    style = MaterialTheme.typography.titleMedium,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
-                )
-                Text(
-                    text = formattedDate,
-                    style = MaterialTheme.typography.bodyMedium
-                )
-            }
-        }
-    }
-
-
+    return color
 }
-
-
-fun getFeelingImageResource(feelingNumber: Int): Int {
-    return when (feelingNumber) {
-        1 -> R.drawable.crying_lots
-        2 -> R.drawable.crying
-        3 -> R.drawable.neutral
-        4 -> R.drawable.happy
-        5 -> R.drawable.very_happy
-        else -> R.drawable.ic_launcher_background
-    }
-}
-
