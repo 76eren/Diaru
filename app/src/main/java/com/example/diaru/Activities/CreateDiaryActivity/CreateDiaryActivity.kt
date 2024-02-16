@@ -56,7 +56,7 @@ fun loading(diaryViewModel: DiaryViewModel, diaryCreateViewModel: DiaryCreateVie
     val entry: DiaryEntity = DiaryEntity(
         UUID.randomUUID().toString(),
         diaryCreateViewModel.content.value,
-        System.currentTimeMillis(),
+        diaryCreateViewModel.customDate.value,
         diaryCreateViewModel.feeling.intValue,
         diaryCreateViewModel.title.value
     )

@@ -2,6 +2,7 @@ package com.example.diaru.Activities.MainActivity
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -41,11 +42,11 @@ fun ShowDiaryEntries(diaryViewModel: DiaryViewModel) {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DiaryEntryItem(entry: DiaryEntity) {
+    Log.d("lol", entry.date.toString())
     val context = LocalContext.current
     val dateInt = entry.date
-    val date: Date = Date()
     val formatter = SimpleDateFormat("dd-MM-yyyy : HH:mm")
-    val formattedDate: String = formatter.format(date)
+    val formattedDate: String = formatter.format(dateInt)
     val settings = SettingsHandler()
 
     val cardColor: Color

@@ -31,16 +31,16 @@ import com.example.diaru.ui.theme.darkSkyBlue
 import com.example.diaru.ui.theme.notepadYellow
 
 
+// This is also being used by the diary view and the diary edit
 @Composable
 fun DiaryWriteEntry(diaryCreateViewModel: DiaryCreateViewModel, context: Context, diaryEntity: DiaryEntity? = null) {
-
-
     var textState by remember { mutableStateOf(TextFieldValue("")) }
     var read = false
+
     if (diaryEntity != null) {
         read = true
         textState = TextFieldValue(diaryEntity.content)
-
+        diaryCreateViewModel.customDate.value = diaryEntity.date
     }
 
     val settings = SettingsHandler()

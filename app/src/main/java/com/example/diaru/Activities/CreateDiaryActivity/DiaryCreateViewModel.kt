@@ -9,6 +9,7 @@ class DiaryCreateViewModel : ViewModel() {
     var title = mutableStateOf("")
     var content = mutableStateOf("")
     var contentScreen = mutableStateOf(UI_STATES.FEELING_SELECTION) // Default to showing the feeling selection screen
+    var customDate = mutableStateOf(System.currentTimeMillis())
 }
 
 enum class UI_STATES {
