@@ -27,20 +27,31 @@ import com.example.diaru.Activities.MainActivity.MainActivity
 import com.example.diaru.R
 import com.example.diaru.Settings.SettingsHandler
 import com.example.diaru.database.diary.DiaryEntity
+import com.example.diaru.database.diary.DiaryViewModel
 import com.example.diaru.ui.theme.darkSkyBlue
 import com.example.diaru.ui.theme.notepadYellow
 
 
 // This is also being used by the diary view and the diary edit
 @Composable
-fun DiaryWriteEntry(diaryCreateViewModel: DiaryCreateViewModel, context: Context, diaryEntity: DiaryEntity? = null) {
-    var textState by remember { mutableStateOf(TextFieldValue("")) }
-    var read = false
+fun DiaryWriteEntry(
+    diaryCreateViewModel: DiaryCreateViewModel
+    , context: Context
+    // ↓ This is being used by the DiaryView.kt file
+    , diaryEntity: DiaryEntity? = null
+    , edit: Boolean = false
+    , diaryViewModel: DiaryViewModel? = null
+) {
+
+    var textState = remember { derivedStateOf { TextFieldValue(diaryCreateViewModel.content.value) } }
+    var read by remember { mutableStateOf(false) }
 
     if (diaryEntity != null) {
         read = true
-        textState = TextFieldValue(diaryEntity.content)
         diaryCreateViewModel.customDate.value = diaryEntity.date
+    }
+    if (edit) {
+        read = false
     }
 
     val settings = SettingsHandler()
@@ -58,9 +69,9 @@ fun DiaryWriteEntry(diaryCreateViewModel: DiaryCreateViewModel, context: Context
 
     Column(modifier = Modifier.padding(16.dp)) {
         BasicTextField(
-            value = textState,
+            value = textState.value.text,
             readOnly = read,
-            onValueChange = { textState = it },
+            onValueChange = { diaryCreateViewModel.content.value = it },
             textStyle = TextStyle(fontSize = fontSize.sp, color = Color.Black, fontFamily = customFontFamily),
             modifier = Modifier
                 .weight(1f)
@@ -74,10 +85,24 @@ fun DiaryWriteEntry(diaryCreateViewModel: DiaryCreateViewModel, context: Context
 
         Button(
             onClick = {
-                if (textState.text.isNotEmpty()) {
-                    Toast.makeText(context, "Adding diary entry", Toast.LENGTH_SHORT).show()
-                    diaryCreateViewModel.content.value = textState.text
-                    diaryCreateViewModel.contentScreen.value = UI_STATES.CONTENT_ADD
+                if (textState.value.text.isNotEmpty()) {
+                    if (edit) {
+                        // TODO: put this in a function
+                        diaryViewModel?.let {
+                            Toast.makeText(context, "Editing diary entry", Toast.LENGTH_SHORT).show()
+                            diaryEntity!!.content = textState.value.text
+                            it.update(diaryEntity)
+                            val intent: Intent = Intent(context, MainActivity::class.java)
+                            context.startActivity(intent)
+                            context.startActivity(intent)
+                        }
+                    }
+                    else {
+                        Toast.makeText(context, "Adding diary entry", Toast.LENGTH_SHORT).show()
+                        diaryCreateViewModel.content.value = textState.value.text
+                        diaryCreateViewModel.contentScreen.value = UI_STATES.CONTENT_ADD
+                    }
+
                 }
                 else {
                     Toast.makeText(context, "Please write something", Toast.LENGTH_SHORT).show()
