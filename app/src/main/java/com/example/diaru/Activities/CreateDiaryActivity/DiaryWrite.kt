@@ -26,13 +26,22 @@ import androidx.compose.ui.unit.sp
 import com.example.diaru.Activities.MainActivity.MainActivity
 import com.example.diaru.R
 import com.example.diaru.Settings.SettingsHandler
+import com.example.diaru.database.diary.DiaryEntity
 import com.example.diaru.ui.theme.darkSkyBlue
 import com.example.diaru.ui.theme.notepadYellow
 
 
 @Composable
-fun DiaryWriteEntry(diaryCreateViewModel: DiaryCreateViewModel, context: Context) {
+fun DiaryWriteEntry(diaryCreateViewModel: DiaryCreateViewModel, context: Context, diaryEntity: DiaryEntity? = null) {
+
+
     var textState by remember { mutableStateOf(TextFieldValue("")) }
+    var read = false
+    if (diaryEntity != null) {
+        read = true
+        textState = TextFieldValue(diaryEntity.content)
+
+    }
 
     val settings = SettingsHandler()
 
@@ -46,10 +55,11 @@ fun DiaryWriteEntry(diaryCreateViewModel: DiaryCreateViewModel, context: Context
         fontSize = 18
     }
 
-    Column(modifier = Modifier.padding(16.dp)) {
 
+    Column(modifier = Modifier.padding(16.dp)) {
         BasicTextField(
             value = textState,
+            readOnly = read,
             onValueChange = { textState = it },
             textStyle = TextStyle(fontSize = fontSize.sp, color = Color.Black, fontFamily = customFontFamily),
             modifier = Modifier
