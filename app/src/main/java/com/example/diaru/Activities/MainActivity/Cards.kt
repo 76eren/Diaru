@@ -44,9 +44,9 @@ fun DiaryEntryItem(entry: DiaryEntity) {
     val context = LocalContext.current
     val dateInt = entry.date
     val date: Date = Date()
-    val formatter = SimpleDateFormat("MM-dd-yyyy : HH:mm")
+    val formatter = SimpleDateFormat("dd-MM-yyyy : HH:mm")
     val formattedDate: String = formatter.format(date)
-    val settings: SettingsHandler = SettingsHandler()
+    val settings = SettingsHandler()
 
     val cardColor: Color
     cardColor = if (settings.getSettingBoolean("preference_theme", false, context)) {
