@@ -37,7 +37,7 @@ import com.example.diaru.ui.theme.notepadYellow
 fun DiaryWriteEntry(
     diaryCreateViewModel: DiaryCreateViewModel
     , context: Context
-    // ↓ This is being used by the DiaryView.kt file
+    // ↓ This is being used by the DiaryViewActivity.kt file
     , diaryEntity: DiaryEntity? = null
     , edit: Boolean = false
     , diaryViewModel: DiaryViewModel? = null
@@ -67,7 +67,8 @@ fun DiaryWriteEntry(
     }
 
 
-    Column(modifier = Modifier.padding(16.dp)) {
+    Column(modifier = Modifier
+        .padding(horizontal = 10.dp, vertical = 5.dp)) {
         BasicTextField(
             value = textState.value.text,
             readOnly = read,
@@ -111,7 +112,7 @@ fun DiaryWriteEntry(
             },
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 20.dp, bottom = 20.dp, start = 8.dp, end = 8.dp),
+                .padding(top = 0.dp, bottom = 5.dp, start = 8.dp, end = 8.dp),
             colors = ButtonDefaults.buttonColors(
                 containerColor = darkSkyBlue,
                 contentColor = Color.White

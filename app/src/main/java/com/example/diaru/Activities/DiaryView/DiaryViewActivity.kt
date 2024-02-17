@@ -2,9 +2,8 @@ package com.example.diaru.Activities.DiaryView
 
 import android.app.Activity
 import android.content.Intent
-import android.content.Intent.getIntent
 import android.os.Bundle
-import android.util.Log
+import android.view.WindowManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -23,14 +22,11 @@ import com.example.diaru.Activities.CreateDiaryActivity.DiaryCreateViewModel
 import com.example.diaru.Activities.CreateDiaryActivity.DiaryWriteEntry
 import com.example.diaru.Activities.MainActivity.toolbarColorPicker
 import com.example.diaru.Settings.SettingsHandler
-import com.example.diaru.database.diary.DiaryEntity
 import com.example.diaru.database.diary.DiaryViewModel
 import com.example.diaru.ui.theme.DiaruTheme
-import androidx.activity.viewModels
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.runtime.*
 import com.example.diaru.Activities.MainActivity.MainActivity
-import java.util.UUID
 
 class DiaryView : ComponentActivity() {
     private val diaryViewModel: DiaryViewModel by viewModels()
@@ -38,6 +34,7 @@ class DiaryView : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         setContent {
             DiaruTheme {
                 val color = SettingsHandler().getColor(this)
