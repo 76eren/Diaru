@@ -27,7 +27,10 @@ import com.example.diaru.database.diary.DiaryEntity
 import com.example.diaru.database.diary.DiaryViewModel
 import com.example.diaru.ui.theme.DiaruTheme
 import androidx.activity.viewModels
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.runtime.*
+import com.example.diaru.Activities.MainActivity.MainActivity
+import java.util.UUID
 
 class DiaryView : ComponentActivity() {
     private val diaryViewModel: DiaryViewModel by viewModels()
@@ -73,6 +76,7 @@ fun DiaryViewApp(diaryViewModel: DiaryViewModel, diaryViewCreateViewModel: Diary
     val context = LocalContext.current
     val color: Color = toolbarColorPicker(context)
     var edit by remember { mutableStateOf(false) }
+    var delete by remember { mutableStateOf(false) }
 
     Column {
         TopAppBar(title = { Text("") }, navigationIcon = {
@@ -81,6 +85,9 @@ fun DiaryViewApp(diaryViewModel: DiaryViewModel, diaryViewCreateViewModel: Diary
                 IconButton(onClick = { edit = true }) {
                     Icon(Icons.Filled.Edit, contentDescription = "Edit", tint = Color.White)
                 }
+                IconButton(onClick = { delete = true }) {
+                    Icon(Icons.Filled.Delete, contentDescription = "Delete", tint = Color.White)
+                }
             },
             colors = TopAppBarDefaults.topAppBarColors(
                 containerColor = color,
@@ -88,11 +95,32 @@ fun DiaryViewApp(diaryViewModel: DiaryViewModel, diaryViewCreateViewModel: Diary
                 actionIconContentColor = Color.White
             )
         )
+
+        if (delete) {
+            DeleteDiaryEntry(diaryViewModel)
+            return
+        }
         if (edit) {
             DiaryViewContent(diaryViewModel, diaryViewCreateViewModel, edit = true)
         }
         else {
             DiaryViewContent(diaryViewModel, diaryViewCreateViewModel, edit = false)
+        }
+    }
+}
+
+@Composable
+fun DeleteDiaryEntry(diaryViewModel: DiaryViewModel) {
+    val intent = (LocalContext.current as Activity).intent
+    val diaryId = intent.getStringExtra("id")
+
+    val diaryEntries by diaryViewModel.allEntries.observeAsState(initial = emptyList())
+    for (i in diaryEntries) {
+        if (i.id == diaryId) {
+            diaryViewModel.delete(i)
+            val mainIntent = Intent(LocalContext.current, MainActivity::class.java)
+            LocalContext.current.startActivity(mainIntent)
+            break
         }
     }
 }

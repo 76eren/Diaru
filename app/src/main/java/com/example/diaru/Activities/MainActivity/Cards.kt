@@ -42,7 +42,6 @@ fun ShowDiaryEntries(diaryViewModel: DiaryViewModel) {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DiaryEntryItem(entry: DiaryEntity) {
-    Log.d("lol", entry.date.toString())
     val context = LocalContext.current
     val dateInt = entry.date
     val formatter = SimpleDateFormat("dd-MM-yyyy : HH:mm")
