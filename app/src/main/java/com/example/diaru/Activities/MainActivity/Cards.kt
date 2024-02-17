@@ -110,11 +110,11 @@ fun DiaryEntryItem(entry: DiaryEntity) {
 
 fun getFeelingImageResource(feelingNumber: Int): Int {
     return when (feelingNumber) {
-        1 -> R.drawable.crying_lots
-        2 -> R.drawable.crying
-        3 -> R.drawable.neutral
-        4 -> R.drawable.happy
-        5 -> R.drawable.very_happy
+        0 -> R.drawable.crying_lots
+        1 -> R.drawable.crying
+        2 -> R.drawable.neutral
+        3 -> R.drawable.happy
+        4 -> R.drawable.very_happy
         else -> R.drawable.ic_launcher_background
     }
 }
