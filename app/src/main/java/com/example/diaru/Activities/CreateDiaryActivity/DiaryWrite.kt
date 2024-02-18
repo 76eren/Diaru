@@ -1,8 +1,10 @@
 package com.example.diaru.Activities.CreateDiaryActivity
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.preference.PreferenceManager
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
@@ -42,7 +44,8 @@ fun DiaryWriteEntry(
     , edit: Boolean = false
     , diaryViewModel: DiaryViewModel? = null
 ) {
-
+    val activity: Activity = context as Activity
+    activity.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
     var textState = remember { derivedStateOf { TextFieldValue(diaryCreateViewModel.content.value) } }
     var read by remember { mutableStateOf(false) }
 

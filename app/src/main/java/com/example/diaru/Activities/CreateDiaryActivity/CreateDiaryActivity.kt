@@ -30,7 +30,6 @@ class CreateDiaryActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         setContent {
             DiaruTheme {
                 val color = SettingsHandler().getColor(this)
