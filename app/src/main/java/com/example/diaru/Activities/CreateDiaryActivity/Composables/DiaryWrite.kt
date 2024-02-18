@@ -1,9 +1,8 @@
-package com.example.diaru.Activities.CreateDiaryActivity
+package com.example.diaru.Activities.CreateDiaryActivity.Composables
 
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.preference.PreferenceManager
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
@@ -25,6 +24,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.diaru.Activities.CreateDiaryActivity.DiaryCreateViewModel
+import com.example.diaru.Activities.CreateDiaryActivity.UI_STATES
 import com.example.diaru.Activities.MainActivity.MainActivity
 import com.example.diaru.R
 import com.example.diaru.Settings.SettingsHandler
@@ -37,28 +38,26 @@ import com.example.diaru.ui.theme.notepadYellow
 // This is also being used by the diary view and the diary edit
 @Composable
 fun DiaryWriteEntry(
-    diaryCreateViewModel: DiaryCreateViewModel
-    , context: Context
+    diaryCreateViewModel: DiaryCreateViewModel, context: Context
     // ↓ This is being used by the DiaryViewActivity.kt file
-    , diaryEntity: DiaryEntity? = null
-    , edit: Boolean = false
-    , diaryViewModel: DiaryViewModel? = null
+    , diaryEntity: DiaryEntity? = null, edit: Boolean = false, diaryViewModel: DiaryViewModel? = null
 ) {
     val activity: Activity = context as Activity
-    activity.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+    activity.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+
     var textState = remember { derivedStateOf { TextFieldValue(diaryCreateViewModel.content.value) } }
-    var read by remember { mutableStateOf(false) }
+    var readOnly by remember { mutableStateOf(false) }
 
     if (diaryEntity != null) {
-        read = true
+        readOnly = true
         diaryCreateViewModel.customDate.value = diaryEntity.date
     }
     if (edit) {
-        read = false
+        readOnly = false
     }
 
-    val settings = SettingsHandler()
 
+    val settings = SettingsHandler()
     val customFontFamily: FontFamily
     val fontSize: Int
     if (settings.getSettingBoolean("preference_cursive", false, context)) {
@@ -70,11 +69,13 @@ fun DiaryWriteEntry(
     }
 
 
-    Column(modifier = Modifier
-        .padding(horizontal = 10.dp, vertical = 5.dp)) {
+    Column(
+        modifier = Modifier
+            .padding(horizontal = 10.dp, vertical = 5.dp)
+    ) {
         BasicTextField(
             value = textState.value.text,
-            readOnly = read,
+            readOnly = readOnly,
             onValueChange = { diaryCreateViewModel.content.value = it },
             textStyle = TextStyle(fontSize = fontSize.sp, color = Color.Black, fontFamily = customFontFamily),
             modifier = Modifier
@@ -91,7 +92,6 @@ fun DiaryWriteEntry(
             onClick = {
                 if (textState.value.text.isNotEmpty()) {
                     if (edit) {
-                        // TODO: put this in a function
                         diaryViewModel?.let {
                             Toast.makeText(context, "Editing diary entry", Toast.LENGTH_SHORT).show()
                             diaryEntity!!.content = textState.value.text
@@ -100,15 +100,13 @@ fun DiaryWriteEntry(
                             context.startActivity(intent)
                             context.startActivity(intent)
                         }
-                    }
-                    else {
+                    } else {
                         Toast.makeText(context, "Adding diary entry", Toast.LENGTH_SHORT).show()
                         diaryCreateViewModel.content.value = textState.value.text
                         diaryCreateViewModel.contentScreen.value = UI_STATES.CONTENT_ADD
                     }
 
-                }
-                else {
+                } else {
                     Toast.makeText(context, "Please write something", Toast.LENGTH_SHORT).show()
                 }
 

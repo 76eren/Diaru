@@ -1,8 +1,6 @@
-package com.example.diaru.Activities.MainActivity
+package com.example.diaru.Activities.MainActivity.Composables
 
-import android.content.Context
 import android.content.Intent
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -18,7 +16,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.example.diaru.Activities.CreateDiaryActivity.CreateDiaryActivity
 import com.example.diaru.Activities.DiaryView.DiaryView
 import com.example.diaru.R
 import com.example.diaru.Settings.SettingsHandler
@@ -26,7 +23,6 @@ import com.example.diaru.database.diary.DiaryEntity
 import com.example.diaru.database.diary.DiaryViewModel
 import com.example.diaru.ui.theme.cardColorLightMode
 import java.text.SimpleDateFormat
-import java.util.*
 
 @Composable
 fun ShowDiaryEntries(diaryViewModel: DiaryViewModel) {
@@ -51,17 +47,17 @@ fun DiaryEntryItem(entry: DiaryEntity) {
     val cardColor: Color
     cardColor = if (settings.getSettingBoolean("preference_theme", false, context)) {
         MaterialTheme.colorScheme.background
-    }
-    else {
+    } else {
         cardColorLightMode
     }
 
-    Card( onClick = {
-        val intent = Intent(context, DiaryView::class.java)
-        intent.putExtra("id", entry.id)
-        context.startActivity(intent)
+    Card(
+        onClick = {
+            val intent = Intent(context, DiaryView::class.java)
+            intent.putExtra("id", entry.id)
+            context.startActivity(intent)
 
-    },
+        },
         modifier = Modifier
             .fillMaxWidth()
             .padding(8.dp),
@@ -73,7 +69,7 @@ fun DiaryEntryItem(entry: DiaryEntity) {
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     )
     {
-        Row (
+        Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp),

@@ -3,25 +3,21 @@ package com.example.diaru.Activities.CreateDiaryActivity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import android.view.WindowManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.core.content.ContextCompat.startActivity
+import com.example.diaru.Activities.CreateDiaryActivity.Composables.Content
+import com.example.diaru.Activities.CreateDiaryActivity.Composables.DiaryWriteEntry
+import com.example.diaru.Activities.CreateDiaryActivity.Composables.FeelingBar
 import com.example.diaru.Activities.MainActivity.MainActivity
 import com.example.diaru.Settings.SettingsHandler
 import com.example.diaru.database.diary.DiaryEntity
 import com.example.diaru.database.diary.DiaryViewModel
 import com.example.diaru.ui.theme.DiaruTheme
-import com.example.diaru.ui.theme.skyeBlue
 import java.util.*
 
 class CreateDiaryActivity : ComponentActivity() {

@@ -1,4 +1,4 @@
-package com.example.diaru.Activities.CreateDiaryActivity
+package com.example.diaru.Activities.CreateDiaryActivity.Composables
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
@@ -15,6 +15,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.diaru.Activities.CreateDiaryActivity.DiaryCreateViewModel
+import com.example.diaru.Activities.CreateDiaryActivity.UI_STATES
 import com.example.diaru.R
 import com.example.diaru.ui.theme.darkSkyBlue
 
@@ -23,9 +25,17 @@ import com.example.diaru.ui.theme.darkSkyBlue
 fun FeelingBar(createViewModel: DiaryCreateViewModel) {
     var feeling by remember { mutableStateOf(-1) }
 
-    val rainbowColors: List<Color> = listOf(Color.Red, Color(0xFFFFA500), Color.Yellow, Color.Green, Color.Blue, Color(0xFF4B0082), Color(0xFF8A2BE2))
+    val rainbowColors: List<Color> = listOf(
+        Color.Red,
+        Color(0xFFFFA500),
+        Color.Yellow,
+        Color.Green,
+        Color.Blue,
+        Color(0xFF4B0082),
+        Color(0xFF8A2BE2)
+    )
 
-    Column (
+    Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
@@ -35,7 +45,7 @@ fun FeelingBar(createViewModel: DiaryCreateViewModel) {
             text = "How did you feel today?",
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 8.dp, bottom = 90.dp, start =8.dp, end = 8.dp),
+                .padding(top = 8.dp, bottom = 90.dp, start = 8.dp, end = 8.dp),
             style = MaterialTheme.typography.displayLarge.copy(
                 fontWeight = FontWeight.Bold,
                 letterSpacing = 1.5.sp,
@@ -47,8 +57,10 @@ fun FeelingBar(createViewModel: DiaryCreateViewModel) {
 
         )
 
-        Row(modifier = Modifier
-            .fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth(), horizontalArrangement = Arrangement.Center
+        ) {
 
             val images = listOf(
                 R.drawable.crying_lots,

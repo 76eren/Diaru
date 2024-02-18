@@ -2,7 +2,7 @@ package com.example.diaru.database.diary
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import java.util.UUID
+import java.util.*
 
 @Entity(tableName = "diary")
 data class DiaryEntity(

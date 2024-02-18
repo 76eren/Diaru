@@ -3,7 +3,6 @@ package com.example.diaru.Activities.DiaryView
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.view.WindowManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -12,21 +11,21 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import com.example.diaru.Activities.CreateDiaryActivity.Composables.DiaryWriteEntry
 import com.example.diaru.Activities.CreateDiaryActivity.DiaryCreateViewModel
-import com.example.diaru.Activities.CreateDiaryActivity.DiaryWriteEntry
-import com.example.diaru.Activities.MainActivity.toolbarColorPicker
+import com.example.diaru.Activities.MainActivity.Composables.toolbarColorPicker
+import com.example.diaru.Activities.MainActivity.MainActivity
 import com.example.diaru.Settings.SettingsHandler
 import com.example.diaru.database.diary.DiaryViewModel
 import com.example.diaru.ui.theme.DiaruTheme
-import androidx.compose.material.icons.filled.Delete
-import androidx.compose.runtime.*
-import com.example.diaru.Activities.MainActivity.MainActivity
 
 class DiaryView : ComponentActivity() {
     private val diaryViewModel: DiaryViewModel by viewModels()
@@ -46,7 +45,11 @@ class DiaryView : ComponentActivity() {
 }
 
 @Composable
-fun DiaryViewContent(diaryViewModel: DiaryViewModel, diaryCreateViewModel: DiaryCreateViewModel, edit: Boolean = false) {
+fun DiaryViewContent(
+    diaryViewModel: DiaryViewModel,
+    diaryCreateViewModel: DiaryCreateViewModel,
+    edit: Boolean = false
+) {
     val intent = (LocalContext.current as Activity).intent
     val diaryId = intent.getStringExtra("id")
 
@@ -56,13 +59,17 @@ fun DiaryViewContent(diaryViewModel: DiaryViewModel, diaryCreateViewModel: Diary
             diaryCreateViewModel.title.value = i.title
             diaryCreateViewModel.content.value = i.content
             diaryCreateViewModel.feeling.intValue = i.feeling
-            DiaryWriteEntry(diaryCreateViewModel, LocalContext.current, diaryEntity = i, edit = edit, diaryViewModel = diaryViewModel)
+            DiaryWriteEntry(
+                diaryCreateViewModel,
+                LocalContext.current,
+                diaryEntity = i,
+                edit = edit,
+                diaryViewModel = diaryViewModel
+            )
             break
         }
     }
 
-
-    
 }
 
 
@@ -98,8 +105,7 @@ fun DiaryViewApp(diaryViewModel: DiaryViewModel, diaryViewCreateViewModel: Diary
         }
         if (edit) {
             DiaryViewContent(diaryViewModel, diaryViewCreateViewModel, edit = true)
-        }
-        else {
+        } else {
             DiaryViewContent(diaryViewModel, diaryViewCreateViewModel, edit = false)
         }
     }

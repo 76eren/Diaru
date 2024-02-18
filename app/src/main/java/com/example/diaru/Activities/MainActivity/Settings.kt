@@ -2,7 +2,6 @@ package com.example.diaru.Activities.MainActivity
 
 import android.content.Context
 import android.content.Intent
-import android.preference.PreferenceManager
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -19,7 +18,13 @@ import com.example.diaru.Settings.SettingsHandler
 
 
 @Composable
-fun SwitchItem(settingName: String, settingsKey: String, default: Boolean ,context: Context, reloadActivity: Boolean = false) {
+fun SwitchItem(
+    settingName: String,
+    settingsKey: String,
+    default: Boolean,
+    context: Context,
+    reloadActivity: Boolean = false
+) {
     val settings = SettingsHandler()
 
     val switchState = remember { mutableStateOf(settings.getSettingBoolean(settingsKey, default, context)) }

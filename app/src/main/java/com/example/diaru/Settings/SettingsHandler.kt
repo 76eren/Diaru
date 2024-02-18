@@ -5,7 +5,6 @@ import android.preference.PreferenceManager
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import com.example.diaru.ui.theme.skyeBlue
 
 class SettingsHandler {
@@ -27,9 +26,8 @@ class SettingsHandler {
         val settings = SettingsHandler()
         val color: Color
         if (settings.getSettingBoolean("preference_theme", false, context)) {
-            color =  MaterialTheme.colorScheme.background
-        }
-        else {
+            color = MaterialTheme.colorScheme.background
+        } else {
             color = skyeBlue
         }
         return color

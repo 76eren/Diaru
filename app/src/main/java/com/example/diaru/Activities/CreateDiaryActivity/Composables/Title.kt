@@ -1,7 +1,6 @@
-package com.example.diaru.Activities.CreateDiaryActivity
+package com.example.diaru.Activities.CreateDiaryActivity.Composables
 
 import android.content.Context
-import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
@@ -14,7 +13,10 @@ import androidx.compose.material.TextField
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -25,6 +27,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.diaru.Activities.CreateDiaryActivity.DiaryCreateViewModel
+import com.example.diaru.Activities.CreateDiaryActivity.UI_STATES
 import com.example.diaru.ui.theme.darkSkyBlue
 
 
@@ -37,10 +41,9 @@ fun Content(diaryCreateViewModel: DiaryCreateViewModel, context: Context) {
 fun InputField(diaryCreateViewModel: DiaryCreateViewModel, context: Context) {
     Column(
         modifier = Modifier.fillMaxWidth()
-            .padding(bottom = 150.dp, top = 10.dp, start = 10.dp, end = 10.dp)
-        , verticalArrangement  = Arrangement.Center
-        , horizontalAlignment = Alignment.CenterHorizontally
-        ,
+            .padding(bottom = 150.dp, top = 10.dp, start = 10.dp, end = 10.dp),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text(
             text = "Pick a fitting title for your diary entry",
@@ -59,7 +62,15 @@ fun InputField(diaryCreateViewModel: DiaryCreateViewModel, context: Context) {
         )
 
         var value by remember { diaryCreateViewModel.title }
-        val rainbowColors: List<Color> = listOf(Color.Red, Color(0xFFFFA500), Color.Yellow, Color.Green, Color.Blue, Color(0xFF4B0082), Color(0xFF8A2BE2))
+        val rainbowColors: List<Color> = listOf(
+            Color.Red,
+            Color(0xFFFFA500),
+            Color.Yellow,
+            Color.Green,
+            Color.Blue,
+            Color(0xFF4B0082),
+            Color(0xFF8A2BE2)
+        )
         val brush = remember {
             Brush.linearGradient(
                 colors = rainbowColors
@@ -68,7 +79,12 @@ fun InputField(diaryCreateViewModel: DiaryCreateViewModel, context: Context) {
         TextField(
             value = value,
             onValueChange = { value = it },
-            textStyle = TextStyle(brush = brush, fontSize = 28.sp, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center),
+            textStyle = TextStyle(
+                brush = brush,
+                fontSize = 28.sp,
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Center
+            ),
             maxLines = 1,
             modifier = Modifier.fillMaxWidth()
 
@@ -76,12 +92,11 @@ fun InputField(diaryCreateViewModel: DiaryCreateViewModel, context: Context) {
 
         Button(
             onClick = {
-              if (value.isNotEmpty()) {
-                  onTitleButtonClick(diaryCreateViewModel, context, value)
-              }
-              else {
-                  Toast.makeText(context, "Please enter a title", Toast.LENGTH_SHORT).show()
-              }
+                if (value.isNotEmpty()) {
+                    onTitleButtonClick(diaryCreateViewModel, context, value)
+                } else {
+                    Toast.makeText(context, "Please enter a title", Toast.LENGTH_SHORT).show()
+                }
 
 
             },
@@ -115,8 +130,7 @@ fun onTitleButtonClick(diaryCreateViewModel: DiaryCreateViewModel, context: Cont
     if (value.isNotEmpty()) {
         diaryCreateViewModel.title.value = value
         diaryCreateViewModel.contentScreen.value = UI_STATES.CONTENT_WRITE
-    }
-    else {
+    } else {
         Toast.makeText(context, "Please enter a title", Toast.LENGTH_SHORT).show()
     }
 

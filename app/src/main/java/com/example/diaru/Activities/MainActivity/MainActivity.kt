@@ -2,33 +2,27 @@ package com.example.diaru.Activities.MainActivity
 
 import android.content.Context
 import android.content.Intent
-import android.content.res.Configuration
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
 import androidx.compose.material.Scaffold
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material3.*
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.diaru.Activities.CreateDiaryActivity.CreateDiaryActivity
+import com.example.diaru.Activities.MainActivity.Composables.ShowDiaryEntries
+import com.example.diaru.Activities.MainActivity.Composables.Toolbar
 import com.example.diaru.Navbar.BottomNavigationBar
 import com.example.diaru.Navbar.Screen
 import com.example.diaru.Settings.SettingsHandler
-import com.example.diaru.database.diary.DiaryEntity
 import com.example.diaru.database.diary.DiaryViewModel
-import com.example.diaru.ui.theme.*
+import com.example.diaru.ui.theme.DiaruTheme
 
 
 class MainActivity : ComponentActivity() {
@@ -66,50 +60,9 @@ fun MyApp(context: Context, diaryViewModel: DiaryViewModel) {
 
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun Toolbar(context: Context) {
-    val settings = SettingsHandler()
-
-    // I am not sure if handling the theme in a custom way is the best way to do it
-    val color: Color = toolbarColorPicker(context)
-
-
-    TopAppBar(
-        title = { Text("", color = Color.Blue) },
-        actions = {
-            IconButton(onClick = { addBook(context) }) {
-                Icon(Icons.Filled.Add, contentDescription = "Add", tint = Color.White)
-            }
-        },
-        colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = color,
-            titleContentColor = Color.White,
-            actionIconContentColor = Color.White
-        )
-    )
-}
 
 fun addBook(contenxt: Context) {
     val intent = Intent(contenxt, CreateDiaryActivity::class.java)
     contenxt.startActivity(intent)
 }
 
-@Composable
-fun toolbarColorPicker(context: Context): Color {
-    val settings = SettingsHandler()
-    val color: Color
-    if (settings.getSettingBoolean("preference_theme", false, context)) {
-        val nightModeFlags: Int = context.getResources().getConfiguration().uiMode and Configuration.UI_MODE_NIGHT_MASK
-        when (nightModeFlags) {
-            Configuration.UI_MODE_NIGHT_YES -> { color = topBarDarkMode }
-            Configuration.UI_MODE_NIGHT_NO -> { color = topBarLightMode }
-            else -> { color = MaterialTheme.colorScheme.background }
-        }
-    }
-    else {
-        color = darkSkyBlue
-    }
-
-    return color
-}
