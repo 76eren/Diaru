@@ -59,6 +59,7 @@ fun PreferenceScreen(context: Context) {
         Column {
             SwitchItem("Use cursive font", "preference_cursive", default = true, context)
             SwitchItem("Use default system theme", "preference_theme", default = false, context, reloadActivity = true)
+            SwitchItem("Keep track of word count", "preference_wordcount", default = true, context)
         }
     }
 }
