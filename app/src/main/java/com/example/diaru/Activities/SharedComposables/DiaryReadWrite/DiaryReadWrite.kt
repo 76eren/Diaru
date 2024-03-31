@@ -1,4 +1,4 @@
-package com.example.diaru.Activities.CreateDiaryActivity.Composables
+package com.example.diaru.Activities.SharedComposables.DiaryReadWrite
 
 import android.app.Activity
 import android.content.Context
@@ -37,7 +37,7 @@ import com.example.diaru.ui.theme.notepadYellow
 // This is also being used by the diary view and the diary edit
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DiaryWriteEntry(
+fun DiaryReadWriteEntry(
     diaryCreateViewModel: DiaryCreateViewModel, context: Context
     // ↓ This is being used by the DiaryViewActivity.kt file
     , diaryEntity: DiaryEntity? = null, edit: Boolean = false, diaryViewModel: DiaryViewModel? = null

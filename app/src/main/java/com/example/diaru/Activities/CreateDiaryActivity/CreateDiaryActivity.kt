@@ -11,7 +11,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.example.diaru.Activities.CreateDiaryActivity.Composables.Content
-import com.example.diaru.Activities.CreateDiaryActivity.Composables.DiaryWriteEntry
+import com.example.diaru.Activities.SharedComposables.DiaryReadWrite.DiaryReadWriteEntry
 import com.example.diaru.Activities.CreateDiaryActivity.Composables.FeelingBar
 import com.example.diaru.Activities.MainActivity.MainActivity
 import com.example.diaru.Settings.SettingsHandler
@@ -43,7 +43,7 @@ fun CreateDiaryContent(diaryCreateViewModel: DiaryCreateViewModel, context: Cont
     when (diaryCreateViewModel.contentScreen.value) {
         UI_STATES.FEELING_SELECTION -> FeelingBar(diaryCreateViewModel)
         UI_STATES.TITLE_INPUT -> Content(diaryCreateViewModel, context = context)
-        UI_STATES.CONTENT_WRITE -> DiaryWriteEntry(diaryCreateViewModel, context, diaryViewModel = null)
+        UI_STATES.CONTENT_WRITE -> DiaryReadWriteEntry(diaryCreateViewModel, context, diaryViewModel = null)
         UI_STATES.CONTENT_ADD -> loading(diaryViewModel, diaryCreateViewModel, context)
     }
 }

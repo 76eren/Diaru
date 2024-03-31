@@ -19,7 +19,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import com.example.diaru.Activities.CreateDiaryActivity.Composables.DiaryWriteEntry
+import com.example.diaru.Activities.SharedComposables.DiaryReadWrite.DiaryReadWriteEntry
 import com.example.diaru.Activities.CreateDiaryActivity.DiaryCreateViewModel
 import com.example.diaru.Activities.MainActivity.Composables.toolbarColorPicker
 import com.example.diaru.Activities.MainActivity.MainActivity
@@ -59,7 +59,7 @@ fun DiaryViewContent(
             diaryCreateViewModel.title.value = i.title
             diaryCreateViewModel.content.value = i.content
             diaryCreateViewModel.feeling.intValue = i.feeling
-            DiaryWriteEntry(
+            DiaryReadWriteEntry(
                 diaryCreateViewModel,
                 LocalContext.current,
                 diaryEntity = i,
